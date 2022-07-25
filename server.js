@@ -1,4 +1,7 @@
 const express = require('express');
+const path = require('path');
+const note = require ('./db/db.json')
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -10,11 +13,13 @@ app.use(express.static('public'));
 
 
 // get goes here
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Hello World'
-  });
-});
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/notes.html'));
+    });
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+    });
 
 // Default response for any other request (Not Found)
 app.use((req, res) => {
